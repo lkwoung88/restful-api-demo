@@ -17,12 +17,14 @@
 * **self-descriptive messages**
 * **hypermedia as the engine of application state (HATEOAS)**
 ## layered system
-## code0on0demand (Optional)   
+## code-on-demand (Optional)   
     
----
+---   
+   
 ## HTTP
 ## HTML
 ## JSON    
----   
    
+---      
+    
 [REST API Tutorial](https://restfulapi.net/rest-architectural-constraints/)
