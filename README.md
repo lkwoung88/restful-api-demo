@@ -32,7 +32,8 @@
 * **hypermedia as the engine of application state (HATEOAS)**
 	* 애플리케이션의 상태는 Hyperlink를 이용해 전이되어야한다.
 	* HTML로 응답을 하는경우는 이를 만족
-	* JSON으로 표현하는 경우는 Link헤더 사용해서 만족   
+	* JSON으로 표현하는 경우는 Link헤더 사용해서 만족
+      
 [D2 Rest API 강연](https://www.youtube.com/watch?v=RP_f5dMoHFc&t=664s)   
 [What RESTful actually means](https://codewords.recurse.com/issues/five/what-restful-actually-means)
 ## layered system
