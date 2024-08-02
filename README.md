@@ -2,6 +2,7 @@
 * spring boot 3.3.2
 * thymeleaf
 * hateoas
+---
 # REST
 ## client-server
 * 클라이언트와 서버는 서로 종속되지 않은 상태에서 발전될 수 있다.
@@ -43,6 +44,7 @@
 * 해당 제약조건은 선택사항이다.
 * 어플리케이션의 실행을 지원하기 위해 실행이 가능한 코드를 리턴할 수 있다.   
 [REST API Tutorial](https://restfulapi.net/rest-architectural-constraints/)
+---
 # HTTP
 
     
