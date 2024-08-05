@@ -45,7 +45,6 @@
 * 어플리케이션의 실행을 지원하기 위해 실행이 가능한 코드를 리턴할 수 있다.   
 [REST API Tutorial](https://restfulapi.net/rest-architectural-constraints/)
 ---
-# HTTP
 
     
 
