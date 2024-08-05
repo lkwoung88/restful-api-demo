@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Article Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log('window.location.pathname', window.location.pathname);
+            const pathSegments = window.location.pathname.split('/');
+            const articleId = pathSegments[pathSegments.length - 1];
+
+            if (!articleId) {
+                alert('No article ID provided.');
+                window.location.href = '/';
+                return;
+            }
+
+            fetch(`/api-v1/article/${articleId}`)
+                .then(response => response.json())
+                .then(article => {
+                    document.getElementById('title').value = article.title;
+                    document.getElementById('content').value = article.content;
+                    document.getElementById('createdAt').value = new Date(article.createdAt).toLocaleString();
+                    document.getElementById('updatedAt').value = new Date(article.updatedAt).toLocaleString();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load article details.');
+                });
+
+            document.getElementById('update-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                const title = document.getElementById('title').value;
+                const content = document.getElementById('content').value;
+
+                fetch(`/api-v1/article`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id:articleId, title: title, content: content })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Article updated successfully');
+                            window.location.href = `/article/details/${articleId}`;
+                        } else {
+                            alert('Failed to update article');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to update article');
+                    });
+            });
+
+            document.getElementById('delete-button').addEventListener('click', function(event) {
+                event.preventDefault();
+                if (confirm('Are you sure you want to delete this article?')) {
+                    fetch(`/api-v1/article/${articleId}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('Article deleted successfully');
+                                window.location.href = '/';
+                            } else {
+                                alert('Failed to delete article');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to delete article');
+                        });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+
+<main>
+    <div class="form-container">
+        <h2>Article Details</h2>
+        <form id="content-form">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" disabled="disabled" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" required></textarea>
+            </div>
+            <div class="form-group half-width">
+                <div>
+                    <label for="createdAt">Created At</label>
+                    <input type="text" id="createdAt" name="createdAt" disabled required>
+                </div>
+                <div>
+                    <label for="updatedAt">Updated At</label>
+                    <input type="text" id="updatedAt" name="updatedAt" disabled required>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="submit" id="update-button">Modify Content</button>
+                <button type="button" id="delete-button">Delete Content</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

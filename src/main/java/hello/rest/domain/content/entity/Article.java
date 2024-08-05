@@ -8,10 +8,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table
 @Getter
 @Setter
-@Table(name = "t_contents")
-public class Content extends BaseTimeEntity {
+public class Article extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
