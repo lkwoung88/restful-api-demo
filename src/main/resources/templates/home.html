@@ -8,9 +8,11 @@
         document.addEventListener("DOMContentLoaded", function () {
             const promise = fetch('/api-v1/article')
                 .then(response => response.json())
-                .then(articles => {
+                .then(data => {
+                    // HATEOAS 구조에서 articleList를 추출
+                    const articles = data._embedded.articleList;
                     const tableBody = document.querySelector('#contents-table tbody');
-                    articles.forEach(article =>{
+                    articles.forEach(article => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${article.id}</td>
@@ -22,7 +24,7 @@
                         });
                         tableBody.appendChild(row);
                     })
-                })
+                });
         });
     </script>
 </head>

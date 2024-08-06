@@ -1,5 +1,6 @@
 package hello.rest.domain.content.service;
 
+import hello.rest.domain.content.dto.ArticleDto;
 import hello.rest.domain.content.entity.Article;
 import hello.rest.domain.content.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,31 +20,31 @@ public class ArticleService {
         this.articleRepository = articleRepository;
     }
 
-    public List<Article> getContents() {
+    public List<Article> getArticle() {
         return this.articleRepository.findAll();
     }
 
-    public Article getContent(long contentId) {
+    public Article getArticle(long contentId) {
         return this.articleRepository.findById(contentId).orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public long uploadContent(Article article) {
+    public ArticleDto createArticle(Article article) {
         this.articleRepository.save(article);
-        return article.getId();
+        return new ArticleDto(article);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public long modifyContent(Article article) {
-        Article findArticle = this.articleRepository.findById(article.getId()).orElseThrow(NoSuchElementException::new);
-        findArticle.setTitle(article.getTitle());
-        findArticle.setContent(article.getContent());
-        return article.getId();
+    public ArticleDto updateArticle(Article article) {
+        Article updatedArticle = this.articleRepository.findById(article.getId()).orElseThrow(NoSuchElementException::new);
+        updatedArticle.setTitle(article.getTitle());
+        updatedArticle.setContent(article.getContent());
+        return new ArticleDto(updatedArticle);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public long deleteContent(long contentId) {
+    public ArticleDto deleteArticle(long contentId) {
         this.articleRepository.deleteById(contentId);
-        return contentId;
+        return new ArticleDto(contentId);
     }
 }
