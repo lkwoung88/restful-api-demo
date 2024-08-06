@@ -3,8 +3,6 @@ package hello.rest.domain.content.controller;
 import hello.rest.domain.content.dto.ArticleDto;
 import hello.rest.domain.content.entity.Article;
 import hello.rest.domain.content.service.ArticleService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -19,7 +17,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api-v1/article")
 public class ArticleController {
 
-    private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
     private final ArticleService articleService;
 
