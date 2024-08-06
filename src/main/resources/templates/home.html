@@ -9,7 +9,6 @@
             const promise = fetch('/api-v1/article')
                 .then(response => response.json())
                 .then(articles => {
-                    console.log(articles);
                     const tableBody = document.querySelector('#contents-table tbody');
                     articles.forEach(article =>{
                         const row = document.createElement('tr');
