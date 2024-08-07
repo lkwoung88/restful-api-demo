@@ -2,6 +2,7 @@
 * spring boot 3.3.2
 * thymeleaf
 * hateoas
+* java 21
 ---
 # REST
 ## client-server
@@ -35,7 +36,7 @@
 	* HTML로 응답을 하는경우는 이를 만족
 	* JSON으로 표현하는 경우는 Link헤더 사용해서 만족
    
-[D2 Rest API 강연](https://www.youtube.com/watch?v=RP_f5dMoHFc&t=664s)   
+	[D2 Rest API 강연](https://www.youtube.com/watch?v=RP_f5dMoHFc&t=664s)   
 [What RESTful actually means](https://codewords.recurse.com/issues/five/what-restful-actually-means)
 ## layered system
 * REST를 사용해 `layered system architecture`적용할 수 있다.
@@ -45,6 +46,76 @@
 * 어플리케이션의 실행을 지원하기 위해 실행이 가능한 코드를 리턴할 수 있다.   
 [REST API Tutorial](https://restfulapi.net/rest-architectural-constraints/)
 ---
+### cache
+### uniform interface
+#### self-descriptive messages
+1. Media type
+* IANA: HTTP media type
+* 미디어 타입을 정의하고 IANA에 미디어 타입 등록
+* 메시지를 보는 사람은 IANA에서 명세를 확인
+2. Profile
+* Link 헤더에 profile 명세를 작성한 링크 추가
+* 해당 명세를 찾아가 해석가능
+
+#### hypermedia as the engine of application state
+1. HATEOAS 적용
+* 응답에 현재 요청 결과에 적합한 링크 추가
+``` java
+@GetMapping("/{article-id}")
+public EntityModel<Article> getArticle(@PathVariable("article-id") long contentId) {
+    Article selectedArticle = articleService.getArticle(contentId);
+    return EntityModel.of(selectedArticle,
+            linkTo(methodOn(ArticleController.class).getArticle(selectedArticle.getId())).withSelfRel(),
+            linkTo(methodOn(ArticleController.class).updateArticle(null)).withRel("update"),
+            linkTo(methodOn(ArticleController.class).deleteArticle(selectedArticle.getId())).withRel("delete"));
+}
+```
+* 응답 값
+``` json
+{
+    "createdAt": "2024-08-08T00:26:01.591189",
+    "updatedAt": "2024-08-08T00:26:01.591189",
+    "id": 1,
+    "title": " test",
+    "content": "test content",
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api-v1/article/1"
+        },
+        "update": {
+            "href": "http://localhost:8080/api-v1/article"
+        },
+        "delete": {
+            "href": "http://localhost:8080/api-v1/article/1"
+        }
+    }
+}
+```
+* web browser의 session storage를 사용하여 API 요청
+``` js
+sessionStorage.setItem('self', article._links.self.href);
+sessionStorage.setItem('delete', article._links.delete.href);
+sessionStorage.setItem('update', article._links.update.href);
+```
+``` js
+const detailApi = sessionStorage.getItem('self');
+const deleteApi = sessionStorage.getItem('delete');
+const updateApi = sessionStorage.getItem('update');
+
+fetch(detailApi)
+	.then(response => response.json())
+	.then(article => {
+	    document.getElementById('title').value = article.title;
+	    document.getElementById('content').value = article.content;
+	    document.getElementById('createdAt').value = new Date(article.createdAt).toLocaleString();
+	    document.getElementById('updatedAt').value = new Date(article.updatedAt).toLocaleString();
+	})
+	.catch(error => {
+	    console.error('Error:', error);
+	    alert('Failed to load article details.');
+	});
+```
+
 
     
 
