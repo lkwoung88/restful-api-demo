@@ -9,13 +9,11 @@
             const pathSegments = window.location.pathname.split('/');
             const articleId = pathSegments[pathSegments.length - 1];
 
-            if (!articleId) {
-                alert('No article ID provided.');
-                window.location.href = '/';
-                return;
-            }
+            const detailApi = sessionStorage.getItem('self');
+            const deleteApi = sessionStorage.getItem('delete');
+            const updateApi = sessionStorage.getItem('update');
 
-            fetch(`/api-v1/article/${articleId}`)
+            fetch(detailApi)
                 .then(response => response.json())
                 .then(article => {
                     document.getElementById('title').value = article.title;
@@ -33,7 +31,7 @@
                 const title = document.getElementById('title').value;
                 const content = document.getElementById('content').value;
 
-                fetch(`/api-v1/article`, {
+                fetch(updateApi, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -57,7 +55,7 @@
             document.getElementById('delete-button').addEventListener('click', function(event) {
                 event.preventDefault();
                 if (confirm('Are you sure you want to delete this article?')) {
-                    fetch(`/api-v1/article/${articleId}`, {
+                    fetch(deleteApi, {
                         method: 'DELETE'
                     })
                         .then(response => {

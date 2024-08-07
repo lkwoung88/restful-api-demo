@@ -134,13 +134,13 @@ body {
 
 /*등록버튼*/
 
-.register-button-container {
+.create-button-container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
 }
 
-.register-button {
+.create-button {
     padding: 10px 20px;
     font-size: 16px;
     color: #fff;
