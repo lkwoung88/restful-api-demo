@@ -63,8 +63,8 @@ public class ArticleController {
                 linkTo(methodOn(ArticleController.class).getArticle()).withRel("articles"));
     }
 
-    @DeleteMapping("/{content-id}")
-    public EntityModel<ArticleDto> deleteArticle(@PathVariable("content-id") long contentId) {
+    @DeleteMapping("/{article-id}")
+    public EntityModel<ArticleDto> deleteArticle(@PathVariable("article-id") long contentId) {
         return EntityModel.of(articleService.deleteArticle(contentId),
                 linkTo(methodOn(ArticleController.class).getArticle()).withRel("articles"));
     }
