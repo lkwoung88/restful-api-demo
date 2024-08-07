@@ -19,7 +19,7 @@ public class HomeController {
     }
 
     @GetMapping(value = "/article/details/{id}")
-    public String details(@PathVariable Long id, Model model) {
+    public String details(@PathVariable("id") Long id, Model model) {
         model.addAttribute("id", id);
         return "article/details";
     }
