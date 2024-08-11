@@ -48,6 +48,22 @@
 ---
 ## DEMO 
 ### cache
+#### Cache-Control
+* HTTP 헤더에 Cache-Control을 사용해 브라우저가 응답 캐시를 얼마나 보유할지를 알려준다.
+* **Etag 헤더는 만료가 지난 데이터에 대해서도 변경이 없으면 캐시 재할당을 통해 다운로드를 피할수 있게한다.**
+* no-cache: 요청할 때 마다 Etag를 검사한다.
+* no-store: 캐시를 하지 말라는 설정으로 매번 요청에 전체 응답이 다운로드 된다.
+* public, private: 중간 CDN에 캐시를 저장하는지 여부
+* max-age: 캐시의 유효기간
+``` http response
+accept-ranges: bytes
+cache-control: max-age=31536000, private
+content-length: 1362
+content-type: text/javascript
+date: Sun, 11 Aug 2024 11:43:31 GMT
+last-modified: Sun, 11 Aug 2024 11:42:34 GMT
+vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+```
 ### uniform interface
 #### self-descriptive messages
 1. Media type
