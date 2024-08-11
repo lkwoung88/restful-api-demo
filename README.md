@@ -80,14 +80,10 @@ vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
 1. HATEOAS 적용
 * 응답에 현재 요청 결과에 적합한 링크 추가
 ``` java
-@GetMapping("/{article-id}")
-public EntityModel<Article> getArticle(@PathVariable("article-id") long contentId) {
-    Article selectedArticle = articleService.getArticle(contentId);
-    return EntityModel.of(selectedArticle,
-            linkTo(methodOn(ArticleController.class).getArticle(selectedArticle.getId())).withSelfRel(),
-            linkTo(methodOn(ArticleController.class).updateArticle(null)).withRel("update"),
-            linkTo(methodOn(ArticleController.class).deleteArticle(selectedArticle.getId())).withRel("delete"));
-}
+EntityModel<Article> entityModel = EntityModel.of(selectedArticle,
+                linkTo(methodOn(ArticleController.class).getArticle(selectedArticle.getId())).withSelfRel(),
+                linkTo(methodOn(ArticleController.class).updateArticle(null)).withRel("update"),
+                linkTo(methodOn(ArticleController.class).deleteArticle(selectedArticle.getId())).withRel("delete"));
 ```
 * 응답 값
 ``` json
