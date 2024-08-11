@@ -43,8 +43,10 @@
 * 클라이언트는 end point 서버와 연결하는지 아니면 중간 레이어와 연결하는지 알 수 없다.
 ## code-on-demand (Optional)   
 * 해당 제약조건은 선택사항이다.
-* 어플리케이션의 실행을 지원하기 위해 실행이 가능한 코드를 리턴할 수 있다.   
+* 어플리케이션의 실행을 지원하기 위해 실행이 가능한 코드를 리턴할 수 있다.
+   
 [REST API Tutorial](https://restfulapi.net/rest-architectural-constraints/)
+
 ---
 ## DEMO 
 ### cache
